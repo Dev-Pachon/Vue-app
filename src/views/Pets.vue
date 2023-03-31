@@ -2,24 +2,15 @@
     <v-container fluid>
             <v-row>
                 <v-col xs="12" sm="4" md="3" v-for="pet in dogs" :key="pet.breed">
-                    <app-dog :dog="pet"></app-dog>
+                    <Dog :dog="pet"></Dog>
                 </v-col>
             </v-row>
     </v-container>
 </template>
-<script>
+<script setup>
 import { Dogs } from '../data/dogs.js';
 import Dog from '../components/Dog.vue';
+import {ref} from "vue";
 
-export default {
-    name: 'Pets',
-    components: {
-        appDog: Dog
-    },
-    data() {
-        return {
-            dogs: Dogs
-        }
-    }
-}
+const dogs = ref(Dogs)
 </script>

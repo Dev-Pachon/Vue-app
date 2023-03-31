@@ -1,12 +1,13 @@
-<script>
-export default {
-  name: "App",
-  data() {
-    return {
-      themeSwitched: false
-    };
-  }
-};
+<script setup>
+import {computed, ref} from "vue";
+import {useFavoritesStore} from "./stores/store.js";
+
+const store =useFavoritesStore()
+
+let themeSwitched = ref(false)
+
+let favoritesLength = computed(()=>store.favorites.length>0)
+
 </script>
 
 <template>
@@ -20,6 +21,15 @@ export default {
               <v-btn  to="/">Home</v-btn>
               <v-btn to="/pets">Pets</v-btn>
             </v-toolbar-items>
+              <v-spacer/>
+              <router-link to="/favorites" class="pe-3">
+                  <v-badge overlap color="blue" v-model:model-value="favoritesLength">
+                      <template v-slot:badge>
+                          <span>{{store.favorites.length}}</span>
+                      </template>
+                      <v-icon large color="brown">mdi-heart</v-icon>
+                  </v-badge>
+              </router-link>
           </v-toolbar>
           <v-btn @click="themeSwitched = !themeSwitched">Switch Theme</v-btn>
         </header>
